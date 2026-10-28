@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Love! 💕 (PH ✈️ Dubai)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'rose-gold': '#b76e79',
+                        'soft-pink': '#ffeef2',
+                        'blush-pink': '#ffb3c1',
+                        'deep-pink': '#ff758f',
+                        'romantic-red': '#c9184a',
+                    },
+                    fontFamily: {
+                        cursive: ['"Great Vibes"', 'cursive'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        html { scroll-behavior: smooth; }
+
+        /* Soft Pink Gentle Gradient Background */
+        .pink-bg {
+            background: linear-gradient(135deg, #ffeef2 0%, #ffd6ff 40%, #fbb1bd 100%);
+            background-attachment: fixed;
+        }
+
+        /* Glassmorphism Cards */
+        .pink-glass {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .pink-glass-dark {
+            background: rgba(255, 240, 243, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 182, 193, 0.5);
+        }
+
+        /* Floating animations */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0.8; }
+            50% { transform: translateY(-20px) rotate(6deg); }
+            100% { transform: translateY(-40px) rotate(-6deg); opacity: 0; }
+        }
+
+        .floating-item {
+            position: absolute;
+            animation: float 5s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        /* Candle Flame Pulse Animation */
+        @keyframes flamePulse {
+            0%, 100% { transform: scale(1) rotate(-2deg); opacity: 0.95; }
+            50% { transform: scale(1.25) rotate(2deg); filter: drop-shadow(0 0 14px #ffb703); }
+        }
+
+        .flame {
+            animation: flamePulse 0.7s infinite ease-in-out;
+            transform-origin: center bottom;
+        }
+
+        /* Flight Line Glow */
+        @keyframes lineGlow {
+            0%, 100% { opacity: 0.5; stroke-dashoffset: 0; }
+            50% { opacity: 1; stroke-dashoffset: -20; }
+        }
+        .flight-line {
+            stroke-dasharray: 6 6;
+            animation: lineGlow 2s linear infinite;
+        }
+    </style>
+</head>
+<body class="pink-bg font-sans text-gray-800 antialiased overflow-x-hidden selection:bg-pink-400 selection:text-white">
+
+    <!-- Background Audio File -->
+    <audio id="bgMusic" loop src="libolibongbuwan.mp3"></audio>
+
+    <!-- Floating Soft Pink Hearts Background -->
+    <div id="sky-container" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
+
+    <!-- October 29 Countdown Teaser Screen -->
+    <div id="countdown-screen" class="fixed inset-0 z-50 bg-gradient-to-br from-pink-200 via-pink-100 to-rose-200 flex flex-col justify-center items-center p-6 text-center transition-all duration-700">
+        <div class="max-w-md pink-glass p-8 rounded-3xl shadow-2xl space-y-6 border border-white/80 relative">
+            
+            <!-- Secret Bypass Button (Triple Click Lock Icon) -->
+            <div id="secret-lock-icon" onclick="secretUnlockTest()" class="text-4xl text-rose-500 cursor-pointer select-none transition transform active:scale-95 hover:scale-110">
+                🔒
+            </div>
+
+            <div class="space-y-2">
+                <span class="px-3 py-1 bg-white/80 rounded-full text-xs font-bold text-rose-600 uppercase tracking-widest border border-rose-200">
+                    ✨ October 29 Countdown ✨
+                </span>
+                <h2 class="text-3xl font-cursive text-rose-600 pt-2">Ssshh... Huwag muna excited, Love! 💖</h2>
+                <p class="text-xs text-gray-600 leading-relaxed">
+                    May inihanda akong espesyal na sorpresa sa'yo. Magbubukas ito nang kusa sa eksaktong kaarawan mo!
+                </p>
+            </div>
+
+            <!-- Countdown Timer Display -->
+            <div class="grid grid-cols-3 gap-2 py-4">
+                <div class="bg-white/80 p-3 rounded-2xl shadow-sm border border-pink-200">
+                    <span id="cd-hours" class="block text-3xl font-bold font-mono text-rose-600">00</span>
+                    <span class="text-[10px] text-gray-500 uppercase font-semibold">Hours</span>
+                </div>
+                <div class="bg-white/80 p-3 rounded-2xl shadow-sm border border-pink-200">
+                    <span id="cd-minutes" class="block text-3xl font-bold font-mono text-rose-600">00</span>
+                    <span class="text-[10px] text-gray-500 uppercase font-semibold">Minutes</span>
+                </div>
+                <div class="bg-white/80 p-3 rounded-2xl shadow-sm border border-pink-200">
+                    <span id="cd-seconds" class="block text-3xl font-bold font-mono text-rose-600">00</span>
+                    <span class="text-[10px] text-gray-500 uppercase font-semibold">Seconds</span>
+                </div>
+            </div>
+
+            <p class="text-[11px] text-rose-500 font-medium italic animate-pulse">
+                "Kahit anong oras man diyan sa Dubai o rito sa Pilipinas, ikaw pa rin ang uuwian ko..." 💕
+            </p>
+        </div>
+    </div>
+
+    <!-- Surprise Lock Screen Gate -->
+    <div id="lock-screen" class="fixed inset-0 z-40 bg-gradient-to-br from-pink-200 via-pink-100 to-rose-200 flex flex-col justify-center items-center p-6 text-center transition-all duration-700">
+        <div class="max-w-md pink-glass p-8 rounded-3xl shadow-2xl space-y-6 animate-pulse border border-white/80">
+            <div class="relative w-32 h-32 mx-auto rounded-full overflow-hidden shadow-lg border-4 border-white">
+                <img src="Studio.jpg" alt="Love" class="w-full h-full object-cover">
+            </div>
+            <h2 class="text-3xl font-cursive text-rose-600">May Espesyal na Regalo Para Sa'yo, Love! 💕</h2>
+            <p class="text-sm text-gray-600">Kahit libo-libong kilometro man ang distansya mula Pilipinas hanggang Dubai...</p>
+            <button onclick="unlockSurprise()" class="w-full bg-gradient-to-r from-rose-500 via-pink-500 to-rose-400 hover:from-rose-600 hover:to-pink-600 text-white font-semibold py-3.5 px-6 rounded-full shadow-lg transform transition hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
+                <i class="fas fa-heart text-white animate-bounce"></i> Buksan Ang Regalo, Love ✨
+            </button>
+        </div>
+    </div>
+
+    <!-- Fixed Music Player Controls -->
+    <div class="fixed top-4 right-4 z-40 flex items-center gap-2 pink-glass p-2 px-4 rounded-full border border-pink-300 shadow-lg">
+        <button id="music-toggle" onclick="toggleBgm()" class="flex items-center gap-2 text-rose-600 font-semibold text-xs sm:text-sm hover:text-rose-700 transition">
+            <i id="music-icon" class="fas fa-music text-pink-500"></i>
+            <span id="music-text">Play "Libo-libong Buwan"</span>
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen relative flex flex-col justify-center items-center text-center p-6 z-10 pt-16">
+        <div class="max-w-4xl mx-auto space-y-6">
+            <span class="inline-block px-4 py-1.5 rounded-full bg-white/70 text-rose-500 text-xs sm:text-sm font-bold tracking-wider uppercase shadow-sm border border-pink-200">
+                ✨ Happy Birthday, My Love ✨
+            </span>
+            <h1 class="text-5xl sm:text-7xl md:text-8xl font-cursive text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-600 to-rose-500 drop-shadow-sm leading-tight">
+                Maligayang Kaarawan, Love!
+            </h1>
+            
+            <!-- Hero Main Photo Card -->
+            <div class="relative w-48 h-48 sm:w-64 sm:h-64 mx-auto my-4 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform hover:scale-105 transition duration-500">
+                <img src="Studio.jpg" alt="Love Photo" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-rose-900/40 via-transparent to-transparent"></div>
+            </div>
+
+            <p class="text-base sm:text-xl text-gray-700 font-medium max-w-2xl mx-auto leading-relaxed">
+                "Sa libo-libong buwan man ang lumipas at libo-libong milya man ang ating pagitan, ikaw at ikaw pa rin ang uuwian ko."
+            </p>
+
+            <!-- LDR Synchronized Live Clocks -->
+            <div class="pink-glass rounded-3xl p-6 border border-white max-w-xl mx-auto shadow-xl mt-6">
+                <div class="grid grid-cols-2 gap-4 divide-x divide-pink-200">
+                    <!-- Philippines Time -->
+                    <div class="text-center px-2">
+                        <div class="flex justify-center items-center gap-1.5 text-xs text-rose-600 font-bold uppercase mb-1">
+                            <span>🇵🇭</span> Philippines (Ako)
+                        </div>
+                        <div id="ph-clock" class="text-2xl sm:text-3xl font-bold font-mono text-gray-800">00:00:00</div>
+                        <span class="text-[10px] text-gray-500">PHT (GMT+8)</span>
+                    </div>
+                    <!-- Dubai Time -->
+                    <div class="text-center px-2">
+                        <div class="flex justify-center items-center gap-1.5 text-xs text-rose-600 font-bold uppercase mb-1">
+                            <span>🇦🇪</span> Dubai (Love)
+                        </div>
+                        <div id="dubai-clock" class="text-2xl sm:text-3xl font-bold font-mono text-gray-800">00:00:00</div>
+                        <span class="text-[10px] text-gray-500">GST (GMT+4)</span>
+                    </div>
+                </div>
+
+                <!-- Animated Distance Graphic -->
+                <div class="mt-6 pt-4 border-t border-pink-200">
+                    <div class="flex justify-between items-center text-xs text-rose-600 font-medium mb-1 px-2">
+                        <span>Manila, PH</span>
+                        <span class="font-bold text-rose-600">✈️ ~6,900 KM Distance</span>
+                        <span>Dubai, UAE</span>
+                    </div>
+                    <svg class="w-full h-8" viewBox="0 0 300 20">
+                        <path d="M 10 10 Q 150 -5 290 10" fill="transparent" stroke="#ff758f" stroke-width="2.5" class="flight-line"/>
+                        <circle cx="10" cy="10" r="5" fill="#e63946"/>
+                        <circle cx="290" cy="10" r="5" fill="#e63946"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Virtual Hug / Kiss Generator Buttons -->
+            <div class="pt-4 flex flex-wrap justify-center gap-4">
+                <button onclick="sendVirtualLove('hug')" class="bg-rose-500 hover:bg-rose-600 text-white shadow-lg px-6 py-2.5 rounded-full text-sm font-semibold transition transform active:scale-95 flex items-center gap-2">
+                    🤗 Magpadala ng Virtual Hug
+                </button>
+                <button onclick="sendVirtualLove('kiss')" class="bg-pink-500 hover:bg-pink-600 text-white shadow-lg px-6 py-2.5 rounded-full text-sm font-semibold transition transform active:scale-95 flex items-center gap-2">
+                    😘 Magpadala ng Virtual Kiss
+                </button>
+            </div>
+        </div>
+
+        <a href="#memory-lane" class="mt-12 text-rose-600 text-xs font-bold uppercase tracking-widest flex flex-col items-center gap-2 animate-bounce">
+            <span>Tignan Ang Ating Memories</span>
+            <i class="fas fa-chevron-down text-sm"></i>
+        </a>
+    </section>
+
+    <!-- Memory Lane Photo Gallery Section -->
+    <section id="memory-lane" class="py-20 px-4 max-w-6xl mx-auto z-10 relative">
+        <div class="text-center mb-12">
+            <span class="text-rose-500 font-bold text-xs uppercase tracking-widest">Our Story & Moments</span>
+            <h2 class="text-4xl sm:text-5xl font-cursive text-rose-600 mt-1">Memory Lane Gallery 📸</h2>
+            <p class="text-gray-600 text-sm mt-2">Mga paboritong alaala na lagi kong bitbit sa aking puso, Love.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Photo Card 1: Studio Portrait -->
+            <div class="pink-glass rounded-3xl overflow-hidden shadow-xl border border-white group hover:-translate-y-2 transition duration-300">
+                <div class="h-72 overflow-hidden relative">
+                    <img src="Studio.jpg" alt="Studio Couple Portrait" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="font-bold text-lg text-rose-600">Ang Ngiti Mong Walang Katulad</h3>
+                    <p class="text-xs text-gray-600 mt-2 leading-relaxed">
+                        "Eto ang paborito kong ngiti sa buong mundo. Ikaw ang nagbibigay ng saya at liwanag sa araw-araw ko, Love."
+                    </p>
+                </div>
+            </div>
+
+            <!-- Photo Card 2: Motorcycle Hug -->
+            <div class="pink-glass rounded-3xl overflow-hidden shadow-xl border border-white group hover:-translate-y-2 transition duration-300">
+                <div class="h-72 overflow-hidden relative">
+                    <img src="rides.jpg" alt="Motorcycle Ride Hug" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="font-bold text-lg text-rose-600">Kahit Saan Mang Biyahe</h3>
+                    <p class="text-xs text-gray-600 mt-2 leading-relaxed">
+                        "Sa bawat biyahe at lakbay natin, ang yakap mo sa likod ko ang pinakamasarap na pakiramdam sa mundo."
+                    </p>
+                </div>
+            </div>
+
+            <!-- Photo Card 3: Starbucks Coffee Date -->
+            <div class="pink-glass rounded-3xl overflow-hidden shadow-xl border border-white group hover:-translate-y-2 transition duration-300">
+                <div class="h-72 overflow-hidden relative">
+                    <img src="coffee.jpg" alt="Starbucks Coffee Date" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="font-bold text-lg text-rose-600">Simpleng Coffee Date & Kwentuhan</h3>
+                    <p class="text-xs text-gray-600 mt-2 leading-relaxed">
+                        "Mga simpleng moments na katabi kita habang nag-kokape at nagku-kwentuhan—mga bagay na namimiss ko sa'yo araw-araw."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sealed Interactive Love Letter Envelope Section -->
+    <section class="py-20 px-4 max-w-2xl mx-auto text-center z-10 relative">
+        <div class="mb-8">
+            <span class="text-rose-500 font-bold text-xs uppercase tracking-widest">A Secret Message For You</span>
+            <h2 class="text-4xl font-cursive text-rose-600 mt-1">Liham ng Pag-ibig 💌</h2>
+            <p class="text-gray-600 text-sm mt-2">I-click ang sobre para mabuksan ang buong letter, Love!</p>
+        </div>
+
+        <!-- Envelope Graphic -->
+        <div onclick="openLetterModal()" class="relative w-full max-w-sm mx-auto h-56 bg-rose-200 rounded-3xl shadow-2xl border-2 border-rose-300 flex flex-col items-center justify-center cursor-pointer group transform hover:scale-105 transition duration-300">
+            <div class="text-6xl text-rose-500 group-hover:scale-110 transition duration-300">✉️</div>
+            <div class="absolute bottom-4 bg-white/80 px-4 py-1.5 rounded-full border border-rose-300 text-rose-600 text-xs font-bold shadow-sm">
+                ❤️ Click to Open Full Letter
+            </div>
+        </div>
+    </section>
+
+    <!-- Fullscreen Love Letter Modal -->
+    <div id="letter-modal" class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 hidden flex justify-center items-center p-4 overflow-y-auto">
+        <div class="pink-glass-dark p-8 sm:p-12 rounded-3xl max-w-2xl w-full text-gray-800 space-y-6 relative border-2 border-pink-300 shadow-2xl my-8">
+            <button onclick="closeLetterModal()" class="absolute top-4 right-4 bg-rose-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold hover:bg-rose-600 transition shadow">✕</button>
+            
+            <div class="text-center space-y-2">
+                <i class="fas fa-heart text-rose-500 text-3xl"></i>
+                <h3 class="text-4xl font-cursive text-rose-600">Para sa Aking Mahal na Mahal kong Kimberly,</h3>
+            </div>
+
+            <!-- Integrated Couple Photo Inside Letter -->
+            <div class="w-full h-48 rounded-2xl overflow-hidden shadow-md my-4 border-2 border-white">
+                <img src="Studio.jpg" alt="Couple Studio" class="w-full h-full object-cover">
+            </div>
+
+            <div class="prose max-w-none text-gray-700 space-y-4 text-sm sm:text-base leading-relaxed font-light">
+                <p>
+                    Happy Birthday, Love! 🎂✨
+                </p>
+                <p>
+                    Gusto ko lang idaan sa simpleng ginawa kong website na ito ang pagbati ko sa'yo. Alam kong hindi madaling magkalayo tayo—na ako ay nandito sa Pilipinas at ikaw naman ay nasa Dubai. Minsan nakakalungkot na hindi kita maikakandong o mayakap sa mismong araw ng kaarawan mo.
+                </p>
+                <p>
+                    Pero gusto kong ipaalala sa'yo na walang distansya o libo-libong kilometro ang makakabawas sa pagmamahal ko sa'yo. Tulad ng kantang <i>"Libo-libong Buwan"</i>, saan man tayo dalhin ng oras at panahon, ikaw pa rin ang pangarap at ang uuwian ko.
+                </p>
+                <p>
+                    Salamat sa lahat ng sakripisyo, pag-unawa, at pagmamahal mo, Love. Mag-iingat ka palagi diyan sa Dubai. Magce-celebrate din tayo nang magkasama pag-uwi mo!
+                </p>
+                <p class="pt-4 font-serif italic text-rose-600 text-right">
+                    Nagmamahal nang walang katapusan,<br>
+                    <span class="font-cursive text-3xl text-rose-600">Nikko Delfin 💕</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Birthday Cake Section -->
+    <section id="cake-section" class="py-20 px-4 max-w-4xl mx-auto text-center relative z-10">
+        <div class="pink-glass rounded-3xl p-8 sm:p-12 shadow-2xl border border-white">
+            <h2 class="text-3xl sm:text-4xl font-bold text-rose-600 mb-2">Make a Wish, Love! 🎂</h2>
+            <p class="text-gray-600 text-sm mb-8">Pindutin ang mga apoy ng kandila para ihipan ang mga ito!</p>
+
+            <!-- Interactive Cake Graphic -->
+            <div class="relative w-64 h-64 mx-auto my-6 flex flex-col justify-end items-center">
+                <!-- Candles Container -->
+                <div class="flex gap-6 mb-1 z-20">
+                    <div class="candle flex flex-col items-center cursor-pointer" onclick="blowCandle(this)">
+                        <div class="flame w-4 h-6 bg-gradient-to-t from-amber-500 via-orange-400 to-yellow-200 rounded-full shadow-md"></div>
+                        <div class="w-3 h-14 bg-gradient-to-r from-rose-300 via-pink-200 to-rose-300 rounded-t-sm shadow-inner"></div>
+                    </div>
+                    <div class="candle flex flex-col items-center cursor-pointer" onclick="blowCandle(this)">
+                        <div class="flame w-4 h-6 bg-gradient-to-t from-amber-500 via-orange-400 to-yellow-200 rounded-full shadow-md"></div>
+                        <div class="w-3 h-16 bg-gradient-to-r from-purple-300 via-pink-200 to-purple-300 rounded-t-sm shadow-inner"></div>
+                    </div>
+                    <div class="candle flex flex-col items-center cursor-pointer" onclick="blowCandle(this)">
+                        <div class="flame w-4 h-6 bg-gradient-to-t from-amber-500 via-orange-400 to-yellow-200 rounded-full shadow-md"></div>
+                        <div class="w-3 h-14 bg-gradient-to-r from-rose-300 via-pink-200 to-rose-300 rounded-t-sm shadow-inner"></div>
+                    </div>
+                </div>
+
+                <!-- Cake Layers -->
+                <div class="w-48 h-16 bg-gradient-to-r from-pink-300 via-rose-300 to-pink-300 rounded-t-3xl shadow-md relative flex justify-center items-center border-b-4 border-rose-400">
+                    <span class="text-xs text-rose-700 font-bold tracking-widest uppercase">Love</span>
+                </div>
+                <div class="w-64 h-24 bg-gradient-to-r from-rose-400 via-pink-400 to-rose-400 rounded-b-2xl shadow-xl relative flex items-center justify-center">
+                    <span class="text-white text-xs font-semibold tracking-wider uppercase">Happy Birthday, Love!</span>
+                </div>
+                <div class="w-72 h-4 bg-rose-200 rounded-full shadow-xl -mt-1"></div>
+            </div>
+
+            <div id="wish-message" class="hidden mt-6 p-4 bg-rose-100 rounded-2xl border border-rose-300 text-rose-700 font-medium text-base sm:text-lg animate-fade-in">
+                🎉 Happiest Birthday, Love! Kahit malayo tayo sa isa't isa, ikaw pa rin ang nag-iisang liwanag sa buhay ko! I love you so much! ❤️
+            </div>
+            
+            <button onclick="resetCandles()" class="mt-4 text-xs text-rose-600 hover:text-rose-700 underline font-semibold">
+                Sindiha't Ihipan Ulit 🕯️
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 text-center text-rose-600 text-xs z-10 relative font-medium">
+        <p>Made with ❤️ specially for Love | Philippines ✈️ Dubai</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        const audio = document.getElementById('bgMusic');
+        let isPlaying = false;
+
+        function toggleBgm() {
+            const icon = document.getElementById('music-icon');
+            const text = document.getElementById('music-text');
+
+            if (!isPlaying) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    if (icon) icon.className = 'fas fa-pause text-pink-500';
+                    if (text) text.textContent = 'Pause BGM';
+                }).catch(err => {
+                    console.log("Audio play error:", err);
+                });
+            } else {
+                audio.pause();
+                isPlaying = false;
+                if (icon) icon.className = 'fas fa-music text-pink-500';
+                if (text) text.textContent = 'Play "Libo-libong Buwan"';
+            }
+        }
+
+        // Countdown to October 29 Logic
+        function checkBirthdayCountdown() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            
+            // Target Birthday Date: October 29, 00:00:00
+            let targetDate = new Date(`October 29, ${currentYear} 00:00:00`);
+
+            const diff = targetDate - now;
+
+            const cdScreen = document.getElementById('countdown-screen');
+
+            if (diff <= 0) {
+                if (cdScreen) {
+                    cdScreen.classList.add('opacity-0', 'pointer-events-none');
+                    setTimeout(() => cdScreen.remove(), 700);
+                }
+            } else {
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                const hElem = document.getElementById('cd-hours');
+                const mElem = document.getElementById('cd-minutes');
+                const sElem = document.getElementById('cd-seconds');
+
+                if (hElem) hElem.textContent = String(hours).padStart(2, '0');
+                if (mElem) mElem.textContent = String(minutes).padStart(2, '0');
+                if (sElem) sElem.textContent = String(seconds).padStart(2, '0');
+            }
+        }
+
+        // Secret bypass click count for testing
+        let secretClicks = 0;
+        function secretUnlockTest() {
+            secretClicks++;
+            if (secretClicks >= 3) {
+                const cdScreen = document.getElementById('countdown-screen');
+                if (cdScreen) {
+                    cdScreen.classList.add('opacity-0', 'pointer-events-none');
+                    setTimeout(() => cdScreen.remove(), 700);
+                }
+            }
+        }
+
+        setInterval(checkBirthdayCountdown, 1000);
+        checkBirthdayCountdown();
+
+        // Floating Hearts Particle Generator
+        function createHeart() {
+            const container = document.getElementById('sky-container');
+            if (!container) return;
+            const heart = document.createElement('div');
+            heart.classList.add('floating-item');
+            heart.innerHTML = Math.random() > 0.5 ? '💖' : '💕';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            heart.style.fontSize = (Math.random() * 14 + 12) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.opacity = Math.random() * 0.7 + 0.3;
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
+        }
+        setInterval(createHeart, 400);
+
+        // Synchronized Clocks
+        function updateClocks() {
+            const now = new Date();
+            const phTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Manila"}));
+            const phClock = document.getElementById('ph-clock');
+            if (phClock) phClock.textContent = phTime.toLocaleTimeString('en-US', {hour12: false});
+
+            const dubaiTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Dubai"}));
+            const dubaiClock = document.getElementById('dubai-clock');
+            if (dubaiClock) dubaiClock.textContent = dubaiTime.toLocaleTimeString('en-US', {hour12: false});
+        }
+        setInterval(updateClocks, 1000);
+        updateClocks();
+
+        // Unlock Gate
+        function unlockSurprise() {
+            const lockScreen = document.getElementById('lock-screen');
+            if (lockScreen) {
+                lockScreen.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => lockScreen.remove(), 700);
+            }
+            triggerConfetti();
+            toggleBgm();
+        }
+
+        // Letter Modal
+        function openLetterModal() {
+            document.getElementById('letter-modal').classList.remove('hidden');
+        }
+
+        function closeLetterModal() {
+            document.getElementById('letter-modal').classList.add('hidden');
+        }
+
+        // Virtual Hug/Kiss
+        function sendVirtualLove(type) {
+            for(let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const item = document.createElement('div');
+                    item.className = 'fixed text-3xl z-50 pointer-events-none transition-all duration-1000';
+                    item.style.left = '50vw';
+                    item.style.top = '50vh';
+                    item.innerText = type === 'hug' ? '🤗' : '💋';
+                    document.body.appendChild(item);
+
+                    const angle = Math.random() * Math.PI * 2;
+                    const dist = Math.random() * 200 + 50;
+                    const x = Math.cos(angle) * dist;
+                    const y = Math.sin(angle) * dist;
+
+                    setTimeout(() => {
+                        item.style.transform = `translate(${x}px, ${y}px) scale(1.5)`;
+                        item.style.opacity = '0';
+                    }, 50);
+
+                    setTimeout(() => item.remove(), 1100);
+                }, i * 60);
+            }
+        }
+
+        // Candle Blow Out
+        let blownCount = 0;
+        function blowCandle(candleElement) {
+            const flame = candleElement.querySelector('.flame');
+            if (flame && flame.style.display !== 'none') {
+                flame.style.display = 'none';
+                blownCount++;
+                if (blownCount === 3) {
+                    setTimeout(() => {
+                        triggerConfetti();
+                        document.getElementById('wish-message').classList.remove('hidden');
+                    }, 300);
+                }
+            }
+        }
+
+        function resetCandles() {
+            document.querySelectorAll('.flame').forEach(f => f.style.display = 'block');
+            blownCount = 0;
+            document.getElementById('wish-message').classList.add('hidden');
+        }
+
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
+            }
+        }
+    </script>
+</body>
+</html>
